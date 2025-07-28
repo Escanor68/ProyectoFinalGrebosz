@@ -7,6 +7,8 @@ import Category from './pages/Category';
 import ItemDetailContainer from './components/ItemDetailContainer';
 import Cart from './components/Cart';
 import CheckoutForm from './components/CheckoutForm';
+import FirebaseViewer from './components/FirebaseViewer';
+import FirebaseSetup from './components/FirebaseSetup';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
@@ -26,6 +28,8 @@ function App() {
               <Route path="/item/:id" element={<ItemDetailContainer />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/checkout" element={<CheckoutForm />} />
+              <Route path="/firebase" element={<FirebaseViewer />} />
+              <Route path="/firebase-setup" element={<FirebaseSetup />} />
             </Routes>
           </main>
         </div>

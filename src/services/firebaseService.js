@@ -11,9 +11,17 @@ import {
 } from 'firebase/firestore';
 import { db } from './firebase';
 
+/**
+ * Servicios para interactuar con la base de datos de Firebase
+ * Maneja productos, órdenes y estadísticas de la aplicación
+ */
+
 // 🔥 SERVICIO DE PRODUCTOS
 export const productosService = {
-  // Obtener todos los productos
+  /**
+   * Obtiene todos los productos de la base de datos
+   * @returns {Promise<Array>} Array de productos
+   */
   async getAll() {
     try {
       const querySnapshot = await getDocs(collection(db, 'productos'));
@@ -27,7 +35,11 @@ export const productosService = {
     }
   },
 
-  // Obtener producto por ID
+  /**
+   * Obtiene un producto específico por su ID
+   * @param {string} id - ID del producto
+   * @returns {Promise<Object>} Producto encontrado
+   */
   async getById(id) {
     try {
       const docRef = doc(db, 'productos', id);
@@ -44,7 +56,11 @@ export const productosService = {
     }
   },
 
-  // Obtener productos por categoría
+  /**
+   * Obtiene productos filtrados por categoría
+   * @param {string} categoria - Categoría de productos
+   * @returns {Promise<Array>} Array de productos filtrados
+   */
   async getByCategoria(categoria) {
     try {
       const q = query(
@@ -63,7 +79,10 @@ export const productosService = {
     }
   },
 
-  // Obtener productos destacados
+  /**
+   * Obtiene productos marcados como destacados
+   * @returns {Promise<Array>} Array de productos destacados
+   */
   async getDestacados() {
     try {
       const q = query(

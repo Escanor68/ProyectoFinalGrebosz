@@ -2,6 +2,11 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { getAnalytics } from 'firebase/analytics';
 
+/**
+ * Configuración de Firebase para la aplicación
+ * Inicializa los servicios de Firestore y Analytics
+ */
+
 // 🔥 CONFIGURACIÓN DE FIREBASE - CREDENCIALES REALES
 const firebaseConfig = {
   apiKey: "AIzaSyBi5qEQD1zlAFejiTZ6VoaeuIsJWsicVTE",

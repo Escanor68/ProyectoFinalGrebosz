@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import { productosService } from '../services/firebaseService';
-import { productos as mockProductos } from '../utils/mockData';
 
-// 🎯 HOOK PERSONALIZADO PARA PRODUCTOS
+/**
+ * Hook personalizado para manejar productos
+ * Proporciona funcionalidad para obtener productos de Firebase con fallback a datos mock
+ */
 export const useProducts = (categoria = null) => {
   const [productos, setProductos] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -16,21 +18,11 @@ export const useProducts = (categoria = null) => {
       try {
         let productosData;
 
-        // Intentar obtener de Firebase primero
-        try {
-          if (categoria) {
-            productosData = await productosService.getByCategoria(categoria);
-          } else {
-            productosData = await productosService.getAll();
-          }
-        } catch (firebaseError) {
-          console.log('Firebase no disponible, usando datos mock:', firebaseError);
-          // Si Firebase falla, usar datos mock
-          if (categoria) {
-            productosData = mockProductos.filter(p => p.categoria === categoria);
-          } else {
-            productosData = mockProductos;
-          }
+        // Obtener productos de Firebase
+        if (categoria) {
+          productosData = await productosService.getByCategoria(categoria);
+        } else {
+          productosData = await productosService.getAll();
         }
 
         setProductos(productosData);
@@ -47,7 +39,11 @@ export const useProducts = (categoria = null) => {
   return { productos, loading, error };
 };
 
-// 🎯 HOOK PARA PRODUCTO INDIVIDUAL
+/**
+ * Hook para obtener un producto individual por ID
+ * @param {string} id - ID del producto
+ * @returns {Object} Estado del producto (producto, loading, error)
+ */
 export const useProduct = (id) => {
   const [producto, setProducto] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -61,14 +57,8 @@ export const useProduct = (id) => {
       try {
         let productoData;
 
-        // Intentar obtener de Firebase primero
-        try {
-          productoData = await productosService.getById(id);
-        } catch (firebaseError) {
-          console.log('Firebase no disponible, usando datos mock:', firebaseError);
-          // Si Firebase falla, usar datos mock
-          productoData = mockProductos.find(p => p.id === parseInt(id));
-        }
+        // Obtener producto de Firebase
+        productoData = await productosService.getById(id);
 
         if (productoData) {
           setProducto(productoData);
@@ -91,7 +81,10 @@ export const useProduct = (id) => {
   return { producto, loading, error };
 };
 
-// 🎯 HOOK PARA PRODUCTOS DESTACADOS
+/**
+ * Hook para obtener productos destacados
+ * @returns {Object} Estado de productos destacados (destacados, loading, error)
+ */
 export const useDestacados = () => {
   const [destacados, setDestacados] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -105,14 +98,8 @@ export const useDestacados = () => {
       try {
         let destacadosData;
 
-        // Intentar obtener de Firebase primero
-        try {
-          destacadosData = await productosService.getDestacados();
-        } catch (firebaseError) {
-          console.log('Firebase no disponible, usando datos mock:', firebaseError);
-          // Si Firebase falla, usar datos mock
-          destacadosData = mockProductos.filter(p => p.destacado);
-        }
+        // Obtener productos destacados de Firebase
+        destacadosData = await productosService.getDestacados();
 
         setDestacados(destacadosData);
         setLoading(false);
