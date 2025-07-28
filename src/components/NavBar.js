@@ -22,9 +22,6 @@ const NavBar = () => {
             <Nav.Link as={Link} to="/firebase" className="text-warning">
               🔥 Firebase
             </Nav.Link>
-            <Nav.Link as={Link} to="/firebase-setup" className="text-info">
-              ⚙️ Setup
-            </Nav.Link>
             <CartWidget />
           </Nav>
         </Navbar.Collapse>

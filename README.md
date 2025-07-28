@@ -81,7 +81,6 @@ gamestore-ecommerce-c0694/
 ### Componentes de Firebase
 
 - **FirebaseViewer:** Visualización en tiempo real de datos
-- **FirebaseSetup:** Configuración y diagnóstico de conexión
 - **FirebaseService:** Servicios para interactuar con la base de datos
 
 ## 📁 Estructura del Proyecto
@@ -90,7 +89,6 @@ gamestore-ecommerce-c0694/
 src/
 ├── components/          # Componentes reutilizables
 │   ├── FirebaseViewer.js    # Visor de datos de Firebase
-│   ├── FirebaseSetup.js     # Configuración de Firebase
 │   ├── NavBar.js            # Barra de navegación
 │   ├── Cart.js              # Carrito de compras
 │   └── ...
@@ -147,7 +145,6 @@ clearFirebaseData()     # Limpia datos (cuidado!)
 ### Panel de Administración
 - Visor de datos de Firebase en tiempo real
 - Estadísticas de la tienda
-- Herramientas de configuración y diagnóstico
 
 ## 🔒 Seguridad
 
