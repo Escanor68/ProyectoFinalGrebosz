@@ -1,9 +1,13 @@
 import React from 'react';
-import { Card, Button, Row, Col } from 'react-bootstrap';
+import { Card, Button, Row, Col, InputGroup } from 'react-bootstrap';
 import { useCart } from '../context/CartContext';
 
 const CartItem = ({ item }) => {
-  const { removeItem } = useCart();
+  const { removeItem, updateQuantity } = useCart();
+
+  const handleQuantityChange = (newQuantity) => {
+    updateQuantity(item.id, newQuantity);
+  };
 
   return (
     <Card className="mb-3">
@@ -24,8 +28,25 @@ const CartItem = ({ item }) => {
           <Col md={2} className="text-center">
             <span className="fw-bold">${item.precio}</span>
           </Col>
-          <Col md={2} className="text-center">
-            <span className="badge bg-secondary fs-6">{item.quantity}</span>
+          <Col md={3} className="text-center">
+            <InputGroup size="sm" style={{ width: '120px', margin: '0 auto' }}>
+              <Button 
+                variant="outline-secondary" 
+                onClick={() => handleQuantityChange(item.quantity - 1)}
+                disabled={item.quantity <= 1}
+              >
+                -
+              </Button>
+              <div className="form-control text-center">
+                {item.quantity}
+              </div>
+              <Button 
+                variant="outline-secondary" 
+                onClick={() => handleQuantityChange(item.quantity + 1)}
+              >
+                +
+              </Button>
+            </InputGroup>
           </Col>
           <Col md={2} className="text-center">
             <span className="fw-bold text-primary">${(item.precio * item.quantity).toFixed(2)}</span>
@@ -35,6 +56,7 @@ const CartItem = ({ item }) => {
               variant="outline-danger" 
               size="sm"
               onClick={() => removeItem(item.id)}
+              title="Eliminar producto"
             >
               🗑️
             </Button>

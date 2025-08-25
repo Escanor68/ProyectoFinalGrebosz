@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const CartContext = createContext();
 
@@ -11,7 +11,16 @@ export const useCart = () => {
 };
 
 export const CartProvider = ({ children }) => {
-  const [cart, setCart] = useState([]);
+  // Cargar carrito desde localStorage al inicializar
+  const [cart, setCart] = useState(() => {
+    const savedCart = localStorage.getItem('gameStoreCart');
+    return savedCart ? JSON.parse(savedCart) : [];
+  });
+
+  // Guardar carrito en localStorage cada vez que cambie
+  useEffect(() => {
+    localStorage.setItem('gameStoreCart', JSON.stringify(cart));
+  }, [cart]);
 
   const addItem = (item, quantity) => {
     const existingItem = cart.find(cartItem => cartItem.id === item.id);
@@ -29,6 +38,18 @@ export const CartProvider = ({ children }) => {
 
   const removeItem = (itemId) => {
     setCart(cart.filter(item => item.id !== itemId));
+  };
+
+  const updateQuantity = (itemId, newQuantity) => {
+    if (newQuantity <= 0) {
+      removeItem(itemId);
+    } else {
+      setCart(cart.map(item => 
+        item.id === itemId 
+          ? { ...item, quantity: newQuantity }
+          : item
+      ));
+    }
   };
 
   const clear = () => {
@@ -51,6 +72,7 @@ export const CartProvider = ({ children }) => {
     cart,
     addItem,
     removeItem,
+    updateQuantity,
     clear,
     isInCart,
     getTotalQuantity,

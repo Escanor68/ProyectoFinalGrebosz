@@ -5,11 +5,9 @@ import ItemCount from './ItemCount';
 
 const ItemDetail = ({ producto }) => {
   const { addItem, isInCart } = useCart();
-  const [showCount, setShowCount] = useState(!isInCart(producto.id));
 
   const handleAddToCart = (quantity) => {
     addItem(producto, quantity);
-    setShowCount(false);
   };
 
   if (!producto) {
@@ -51,14 +49,14 @@ const ItemDetail = ({ producto }) => {
               <span className="h2 text-primary">${producto.precio}</span>
             </div>
             
-            {showCount ? (
-              <ItemCount 
-                stock={producto.stock} 
-                onAdd={handleAddToCart}
-              />
-            ) : (
-              <Alert variant="success" className="text-center">
-                ¡Producto agregado al carrito! 🎉
+            <ItemCount 
+              stock={producto.stock} 
+              onAdd={handleAddToCart}
+            />
+            
+            {isInCart(producto.id) && (
+              <Alert variant="success" className="text-center mt-2">
+                ¡Producto en el carrito! 🎉
               </Alert>
             )}
           </Card.Body>

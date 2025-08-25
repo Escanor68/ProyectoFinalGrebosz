@@ -12,9 +12,12 @@ export const validatePhone = (phone) => {
   return phoneRegex.test(phone.replace(/\s/g, ''));
 };
 
-// Validar nombre
+// Validar nombre (solo letras y espacios)
 export const validateName = (name) => {
-  return name.trim().length >= 2 && name.trim().length <= 50;
+  const nameRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;
+  return name.trim().length >= 2 && 
+         name.trim().length <= 50 && 
+         nameRegex.test(name.trim());
 };
 
 // Validar dirección
@@ -37,7 +40,7 @@ export const validateCheckoutForm = (formData) => {
   const errors = {};
 
   if (!validateName(formData.nombre)) {
-    errors.nombre = 'El nombre debe tener entre 2 y 50 caracteres';
+    errors.nombre = 'El nombre debe tener entre 2 y 50 caracteres y solo puede contener letras';
   }
 
   if (!validateEmail(formData.email)) {
